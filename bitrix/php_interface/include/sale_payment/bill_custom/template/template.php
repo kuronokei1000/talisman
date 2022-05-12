@@ -669,14 +669,13 @@ for ($n = 1; $n <= $rowsCnt; $n++):
 			</tr>
 			<? } ?>
 		</table>
-		<hr>
-		<a href="/personal/order/payment/?pdf=Y&ORDER_ID=<?$params["ACCOUNT_NUMBER"];?>">Скачать счет в pdf</a>
-		<br>
-		<?print_r($params["ACCOUNT_NUMBER"];)?>
+
 	</div>
 <?endif;?>
 
 </div>
-
+<hr>
+<?$str1 = substr(($params["ACCOUNT_NUMBER"]),0,-2);?>
+<a class="btn btn-default btn-lg has-ripple" href="/personal/order/payment/?pdf=Y&ORDER_ID=<?=$str1?>">Скачать счет в pdf</a>
 </body>
 </html>

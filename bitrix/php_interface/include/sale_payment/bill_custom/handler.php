@@ -17,7 +17,7 @@ Loc::loadMessages(__FILE__);
  * Class BillHandler
  * @package Sale\Handlers\PaySystem
  */
-class BillHandler
+class BillNewHandler
 	extends PaySystem\BaseServiceHandler
 	implements PaySystem\IPdf
 {
