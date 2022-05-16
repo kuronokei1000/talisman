@@ -1,41 +1,4 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
-	__IncludeLang($_SERVER["DOCUMENT_ROOT"].$templateFolder."/lang/".LANGUAGE_ID."/template.php");
-
-use Bitrix\Main\Loader,
-	Bitrix\Main\ModuleManager,
-	Bitrix\Main\Localization\Loc;
-
-global $arTheme, $arRegion;
-
-$arBlockOrder = explode(",", $arParams["DETAIL_BLOCKS_ORDER"]);
-$arTabOrder = explode(",", $arParams["DETAIL_BLOCKS_TAB_ORDER"]);
-
-//add new blocks in update
-if( !in_array('buy_services', $arTabOrder) ){
-	$arTabOrder[] = 'buy_services';
-}
-
-$bCombineStoresMode = ($arTheme['STORE_AMOUNT_VIEW']['VALUE'] == "COMBINE_AMOUNT");
-
-$bServicesRegionality = $arTheme['SERVICES_REGIONALITY']['VALUE'] === 'Y' && $arTheme['USE_REGIONALITY']['VALUE'] === 'Y' && $arTheme['USE_REGIONALITY']['DEPENDENT_PARAMS']['REGIONALITY_FILTER_ITEM']['VALUE'] === 'Y';
-
-if($arTheme['USE_DETAIL_TABS']['VALUE'] != 'Y'){
-	$arBlockOrder = explode(",", $arParams["DETAIL_BLOCKS_ALL_ORDER"]);
-	
-	//add new blocks in update
-	if( !in_array('buy_services', $arBlockOrder) ){
-		$arBlockOrder[] = 'buy_services';
-	}
-}
-
-//add new blocks in update
-if( !in_array('modules', $arBlockOrder) ){
-	$arBlockOrder[] = 'modules';
-}
-
-$currentProductId = $templateData['OFFERS_INFO']["CURRENT_OFFER"] ?? $arResult['ID'] ;
-
-?><?if($arResult["ID"]):?>
+<?if($arResult["ID"]):?>
 	<?//tizers?>
 	<?if($templateData['LINK_TIZERS'] && $arParams['IBLOCK_TIZERS_ID']):?>
 		<?$GLOBALS['arrTizersFilter'] = array('ID' => $templateData['LINK_TIZERS']);?>
@@ -1351,42 +1314,18 @@ $currentProductId = $templateData['OFFERS_INFO']["CURRENT_OFFER"] ?? $arResult['
 							<?$bNavTabs = false;?>
 <?//выводим все книги серии по уровням?>
 <?
-//ИД серии
+//ИД серии текущего товара
 $seria = array();
 $db_props = CIBlockElement::GetProperty($arParams['IBLOCK_ID'], $arParams['ELEMENT_ID'], array("sort" => "asc"), Array("CODE"=>"SERIYA"));
 while ($ob = $db_props->GetNext())
     {
         $seria[] = $ob['VALUE'];
     }
-//ИД уровня по шкале
-$urov = array();
-$db_props1 = CIBlockElement::GetProperty($arParams['IBLOCK_ID'], $arParams['ELEMENT_ID'], array("sort" => "asc"), Array("CODE"=>"YAZYKOVOY_UROVEN_PO_SHKALE_CEFR"));
-while ($ob = $db_props1->GetNext())
-    {
-        $urov[] = $ob['VALUE'];
-    }
-
-//Поулчаем значения уровня в серии
-$rs = CIBlockElement::GetList(
-   array(), 
-   array(
-   "IBLOCK_ID" => 36, 
-   array("ID" => CIBlockElement::SubQuery("ID", array("IBLOCK_ID" => 36, "PROPERTY_SERIYA" => $seria[0]))),
-   ),
-   false, 
-   false,
-   array("PROPERTY_UROVEN_V_SERII")
-);
 
 
-//перебираем массив значений уровня в серии
-while($arr1 = $rs->GetNext()) {
-   $arrLvl[] = $arr1[PROPERTY_UROVEN_V_SERII_VALUE];
-}
-$lvl = array_values(array_unique($arrLvl));
 
-//получаем значения уровня по шкале
-$rsurov = CIBlockElement::GetList(
+//для уровня по шкале
+$rsurov1 = CIBlockElement::GetList(
    array(), 
    array(
    "IBLOCK_ID" => 36, 
@@ -1397,34 +1336,90 @@ $rsurov = CIBlockElement::GetList(
    array("PROPERTY_YAZYKOVOY_UROVEN_PO_SHKALE_CEFR")
 );
 
-//перебираем массив значений уровня по шкале
-while($arrurov = $rsurov->GetNext()) {
-   $arrLvlurov[] = $arrurov[PROPERTY_YAZYKOVOY_UROVEN_PO_SHKALE_CEFR_VALUE];
+while($arrurov2 = $rsurov1->GetNext()) {
+    $arrIDurov1[] = array("ID" => $arrurov2[PROPERTY_YAZYKOVOY_UROVEN_PO_SHKALE_CEFR_ENUM_ID], "NAME" => $arrurov2[PROPERTY_YAZYKOVOY_UROVEN_PO_SHKALE_CEFR_VALUE]);
 }
-$lvlurov = array_values(array_unique($arrLvlurov));
 
-
-
-echo "<pre>"; print_r($lvlurov); echo "</pre>";
-
-$rs1 = CIBlockElement::GetList(
-   array(), 
-   array(
-   "IBLOCK_ID" => 36, 
-   array("ID" => CIBlockElement::SubQuery("ID", array("IBLOCK_ID" => 36, "PROPERTY_SERIYA" => $seria[0]))),
-   ),
-   false, 
-   false,
-   array("PROPERTY_UROVEN_V_SERII")
+$arrIDurov = array(
+0 => array("ID" => "897", "NAME" => "Pre-A1"),
+1 => array("ID" => "898", "NAME" => "A1"),
+2 => array("ID" => "913", "NAME" => "A1.1"),
+3 => array("ID" => "915", "NAME" => "A1+"),
+4 => array("ID" => "905", "NAME" => "A1/A2"),
+5 => array("ID" => "908", "NAME" => "A1/B1"),
+6 => array("ID" => "1482", "NAME" => "A1/B2"),
+7 => array("ID" => "1483", "NAME" => "A1/C1"),
+8 => array("ID" => "899", "NAME" => "A2"),
+9 => array("ID" => "911", "NAME" => "A2/A2+"), 
+10 => array("ID" => "903", "NAME" => "A2+"),
+11 => array("ID" => "910", "NAME" => "A2/B1"),
+12 => array("ID" => "1485", "NAME" => "A2/B2"),
+13 => array("ID" => "1486", "NAME" => "A2/C1"),
+14 => array("ID" => "1484", "NAME" => "A2/C2"),
+15 => array("ID" => "900", "NAME" => "B1"),
+16 => array("ID" => "912", "NAME" => "B1/B1+"),
+17 => array("ID" => "904", "NAME" => "B1+"), 
+18 => array("ID" => "914", "NAME" => "B1/B2"),
+19 => array("ID" => "909", "NAME" => "B1/С1"),
+20 => array("ID" => "901", "NAME" => "B2"),
+21 => array("ID" => "895", "NAME" => "B2+"),
+22 => array("ID" => "906", "NAME" => "B2/С1"),
+23 => array("ID" => "902", "NAME" => "C1"), 
+24 => array("ID" => "896", "NAME" => "C1/C2"),
+25 => array("ID" => "907", "NAME" => "С2") 
 );
 
-while($arr2 = $rs1->GetNext()) {
-    $arrID[] = $arr2[PROPERTY_UROVEN_V_SERII_ENUM_ID];
-
+//функция для сортировки массива
+function unique_multidim_array($array, $key) {
+    $temp_array = array();
+    $i = 0;
+    $key_array = array();
+   
+    foreach($array as $val) {
+        if (!in_array($val[$key], $key_array)) {
+            $key_array[$i] = $val[$key];
+            $temp_array[$i] = $val;
+        }
+        $i++;
+    }
+    return $temp_array;
 }
-$lvlID = array_values(array_unique($arrID));
 
-//echo "<pre>"; print_r($lvl); echo "</pre>";
+
+$arrIDurov1 = array_values(unique_multidim_array($arrIDurov1, "ID"));
+
+foreach ($arrIDurov1 as $key => $row) {
+    $volume[$key]  = $row['ID'];
+    $edition[$key] = $row['NAME'];
+}
+
+$sortID = array_column($arrIDurov1, 'ID');
+$sortNAME = array_column($arrIDurov1, 'NAME');
+
+array_multisort($sortNAME, SORT_ASC, $arrIDurov1);
+
+
+$n = 0;
+while($arrIDurov[$n]) {
+    $arr1IDurov[] = $arrIDurov[$n][ID];
+	$arr2IDurov[] = $arrIDurov[$n][NAME];
+	$n++;
+}
+
+$n1 = 0;
+while($arrIDurov1[$n1]) {
+    $arr1IDurov1[] = $arrIDurov1[$n1][ID];
+	$arr2IDurov1[] = $arrIDurov1[$n1][NAME];
+	$n1++;
+}
+
+
+$diff = array_intersect($arr1IDurov, $arr1IDurov1);
+$diff = array_values($diff);
+
+$diff1 = array_intersect($arr2IDurov, $arr2IDurov1); 
+$diff1 = array_values($diff1);
+
 
 $i = 0;
 ?>
@@ -1433,9 +1428,9 @@ $i = 0;
 <div class="col-md-12">
 	<h2>Все книги серии:</h2>
 		<div class="toogle">
-			<?while ($lvl[$i]):?>
+			<?while ($diff1[$i]):?>
 			<section class="toggle">
-				<label><?echo $lvl[$i];?></label>
+				<label><?echo $diff1[$i];?></label>
 				<div class="toggle-content">
 					<p><?$APPLICATION->IncludeComponent(
 	"bitrix:catalog.section",
@@ -1461,7 +1456,7 @@ $i = 0;
 		"COMPOSITE_FRAME_MODE" => "A",
 		"COMPOSITE_FRAME_TYPE" => "AUTO",
 		"CONVERT_CURRENCY" => "N",
-		"CUSTOM_FILTER" => "{\"CLASS_ID\":\"CondGroup\",\"DATA\":{\"All\":\"AND\",\"True\":\"True\"},\"CHILDREN\":[{\"CLASS_ID\":\"CondIBProp:36:699\",\"DATA\":{\"logic\":\"Equal\",\"value\":$seria[0]}},{\"CLASS_ID\":\"CondIBProp:36:691\",\"DATA\":{\"logic\":\"Equal\",\"value\":$lvlID[$i]}}]}",
+		"CUSTOM_FILTER" => "{\"CLASS_ID\":\"CondGroup\",\"DATA\":{\"All\":\"AND\",\"True\":\"True\"},\"CHILDREN\":[{\"CLASS_ID\":\"CondIBProp:36:699\",\"DATA\":{\"logic\":\"Equal\",\"value\":$seria[0]}},{\"CLASS_ID\":\"CondIBProp:36:692\",\"DATA\":{\"logic\":\"Equal\",\"value\":$diff[$i]}}]}",
 		"DETAIL_URL" => "",
 		"DISABLE_INIT_JS_IN_COMPONENT" => "N",
 		"DISPLAY_BOTTOM_PAGER" => "Y",
@@ -1895,10 +1890,3 @@ $i = 0;
 </script>
 <?$des->finishDynamicArea();?>
 <?if($_GET["RID"]){?><script>$(document).ready(function(){$("<div class='rid_item' data-rid='<?=htmlspecialcharsbx($_GET["RID"]);?>'></div>").appendTo($('body'));});</script><?}?>
-<?
-if( $templateData["OFFERS_INFO"]["CURRENT_OFFER"] && $arTheme['CHANGE_TITLE_ITEM']['VALUE'] === "Y" ){
-	global $currentOfferTitle;
-	$currentOfferTitle["CURRENT_OFFER_TITLE"] = $templateData["OFFERS_INFO"]["CURRENT_OFFER_TITLE"];
-	$currentOfferTitle["CURRENT_OFFER_WINDOW_TITLE"] = $templateData["OFFERS_INFO"]["CURRENT_OFFER_WINDOW_TITLE"];
-}
-?>
