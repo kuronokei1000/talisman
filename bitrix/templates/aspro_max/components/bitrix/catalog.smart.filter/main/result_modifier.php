@@ -2,7 +2,7 @@
 
 $arParams["POPUP_POSITION"] = (isset($arParams["POPUP_POSITION"]) && in_array($arParams["POPUP_POSITION"], array("left", "right"))) ? $arParams["POPUP_POSITION"] : "left";
 
-/* remove empty sections ----------------------------------------*/
+/* remove empty sections */
 
 foreach ($arResult['SECTIONS']  as $key => $value){
    if(0 == $arResult['SECTIONS'][$key]['ELEMENT_CNT'])
@@ -54,7 +54,6 @@ if (!$arResult['ITEMS']) {
 if ($arParams['SHOW_SORT']) {
 	include 'sort.php';
 }
-
 
 global $sotbitFilterResult;
 $sotbitFilterResult = $arResult;
