@@ -33,7 +33,7 @@ foreach($arResult["ITEMS"] as $key => $arItem)
 	}
 }
 
-// sort -CEFR
+// sort CEFR
 foreach($arResult["ITEMS"] as $k => &$prop){
     $values = [];
     foreach ($prop["VALUES"] as $key => $sortkey) {
@@ -43,8 +43,6 @@ foreach($arResult["ITEMS"] as $k => &$prop){
     array_multisort($values, SORT_ASC, $prop['VALUES']);
     unset($values);
 }
-
-
 
 \Bitrix\Main\Localization\Loc::loadLanguageFile(__FILE__);
 
