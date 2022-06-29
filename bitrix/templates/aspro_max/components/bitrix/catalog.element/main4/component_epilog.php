@@ -1397,15 +1397,15 @@ $arrIDurov = array(
 63 => array("ID" => "1320", "NAME" => "Level C2"),
 64 => array("ID" => "891", "NAME" => "Level 7"),
 65 => array("ID" => "892", "NAME" => "Level 8"),
-66=> array("ID" => "893", "NAME" => "Level 9"),
-67=> array("ID" => "894", "NAME" => "Level 10"),
-68=> array("ID" => "821", "NAME" => "Pre-FCE Level"),
-69=> array("ID" => "822", "NAME" => "FCE Level"),
-70=> array("ID" => "823", "NAME" => "Plus Level"),
-71=> array("ID" => "825", "NAME" => "Essential Level"),
-72=> array("ID" => "826", "NAME" => "IELTS"),
-73=> array("ID" => "827", "NAME" => "Level Pre-Junior"),
-74=> array("ID" => "830", "NAME" => "2 класс"),
+66 => array("ID" => "893", "NAME" => "Level 9"),
+67 => array("ID" => "894", "NAME" => "Level 10"),
+68 => array("ID" => "821", "NAME" => "Pre-FCE Level"),
+69 => array("ID" => "822", "NAME" => "FCE Level"),
+70 => array("ID" => "823", "NAME" => "Plus Level"),
+71 => array("ID" => "825", "NAME" => "Essential Level"),
+72 => array("ID" => "826", "NAME" => "IELTS"),
+73 => array("ID" => "827", "NAME" => "Level Pre-Junior"),
+74 => array("ID" => "830", "NAME" => "2 класс"),
 75=> array("ID" => "831", "NAME" => "3 класс"),
 76=> array("ID" => "832", "NAME" => "4 класс"),
 77=> array("ID" => "833", "NAME" => "5 класс"),
@@ -1591,8 +1591,7 @@ $arrIDurov = array(
 257=> array("ID" => "2406", "NAME" => "Flyers 4th Edition"),
 258=> array("ID" => "2413", "NAME" => "Grundstufe"),
 259=> array("ID" => "2414", "NAME" => "Mittelstufe"),
-260=> array("ID" => "2442", "NAME" => "Foundation"),
-270=> array("ID" => "", "NAME" => "")
+260=> array("ID" => "2442", "NAME" => "Foundation")
 );
 
 //функция для сортировки массива
