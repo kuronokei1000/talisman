@@ -1378,6 +1378,7 @@ while($arrurov2 = $rsurov1->GetNext()) {
 }
 
 $arrIDurov = array(
+0 => array("ID" => "", "NAME" => ""),
 1 => array("ID" => "828", "NAME" => "Level Junior A"),
 2 => array("ID" => "849", "NAME" => "Little Explorers A"),
 3 => array("ID" => "851", "NAME" => "Young Explorers 1"),
@@ -1718,7 +1719,7 @@ $i = 0;
 		"COMPOSITE_FRAME_MODE" => "A",
 		"COMPOSITE_FRAME_TYPE" => "AUTO",
 		"CONVERT_CURRENCY" => "N",
-		"CUSTOM_FILTER" => "{\"CLASS_ID\":\"CondGroup\",\"DATA\":{\"All\":\"AND\",\"True\":\"True\"},\"CHILDREN\":[{\"CLASS_ID\":\"CondIBProp:36:699\",\"DATA\":{\"logic\":\"Equal\",\"value\":$seria[0]}},{\"CLASS_ID\":\"CondIBProp:36:692\",\"DATA\":{\"logic\":\"Equal\",\"value\":$diff[$i]}}]}",
+		"CUSTOM_FILTER" => "{\"CLASS_ID\":\"CondGroup\",\"DATA\":{\"All\":\"AND\",\"True\":\"True\"},\"CHILDREN\":[{\"CLASS_ID\":\"CondIBProp:36:699\",\"DATA\":{\"logic\":\"Equal\",\"value\":$seria[0]}},{\"CLASS_ID\":\"CondIBProp:36:691\",\"DATA\":{\"logic\":\"Equal\",\"value\":$diff[$i]}}]}",
 		"DETAIL_URL" => "",
 		"DISABLE_INIT_JS_IN_COMPONENT" => "N",
 		"DISPLAY_BOTTOM_PAGER" => "Y",
