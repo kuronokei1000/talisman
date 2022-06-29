@@ -1,4 +1,41 @@
-<?if($arResult["ID"]):?>
+<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+	__IncludeLang($_SERVER["DOCUMENT_ROOT"].$templateFolder."/lang/".LANGUAGE_ID."/template.php");
+
+use Bitrix\Main\Loader,
+	Bitrix\Main\ModuleManager,
+	Bitrix\Main\Localization\Loc;
+
+global $arTheme, $arRegion;
+
+$arBlockOrder = explode(",", $arParams["DETAIL_BLOCKS_ORDER"]);
+$arTabOrder = explode(",", $arParams["DETAIL_BLOCKS_TAB_ORDER"]);
+
+//add new blocks in update
+if( !in_array('buy_services', $arTabOrder) ){
+	$arTabOrder[] = 'buy_services';
+}
+
+$bCombineStoresMode = ($arTheme['STORE_AMOUNT_VIEW']['VALUE'] == "COMBINE_AMOUNT");
+
+$bServicesRegionality = $arTheme['SERVICES_REGIONALITY']['VALUE'] === 'Y' && $arTheme['USE_REGIONALITY']['VALUE'] === 'Y' && $arTheme['USE_REGIONALITY']['DEPENDENT_PARAMS']['REGIONALITY_FILTER_ITEM']['VALUE'] === 'Y';
+
+if($arTheme['USE_DETAIL_TABS']['VALUE'] != 'Y'){
+	$arBlockOrder = explode(",", $arParams["DETAIL_BLOCKS_ALL_ORDER"]);
+	
+	//add new blocks in update
+	if( !in_array('buy_services', $arBlockOrder) ){
+		$arBlockOrder[] = 'buy_services';
+	}
+}
+
+//add new blocks in update
+if( !in_array('modules', $arBlockOrder) ){
+	$arBlockOrder[] = 'modules';
+}
+
+$currentProductId = $templateData['OFFERS_INFO']["CURRENT_OFFER"] ?? $arResult['ID'] ;
+
+?><?if($arResult["ID"]):?>
 	<?//tizers?>
 	<?if($templateData['LINK_TIZERS'] && $arParams['IBLOCK_TIZERS_ID']):?>
 		<?$GLOBALS['arrTizersFilter'] = array('ID' => $templateData['LINK_TIZERS']);?>
@@ -1333,11 +1370,11 @@ $rsurov1 = CIBlockElement::GetList(
    ),
    false, 
    false,
-   array("UROVEN_V_SERII")
+   array("PROPERTY_UROVEN_V_SERII")
 );
 
 while($arrurov2 = $rsurov1->GetNext()) {
-    $arrIDurov1[] = array("ID" => $arrurov2[UROVEN_V_SERII_ENUM_ID], "NAME" => $arrurov2[UROVEN_V_SERII_VALUE]);
+    $arrIDurov1[] = array("ID" => $arrurov2[PROPERTY_UROVEN_V_SERII_ENUM_ID], "NAME" => $arrurov2[PROPERTY_UROVEN_V_SERII_VALUE]);
 }
 
 $arrIDurov = array(
@@ -2115,3 +2152,10 @@ $i = 0;
 </script>
 <?$des->finishDynamicArea();?>
 <?if($_GET["RID"]){?><script>$(document).ready(function(){$("<div class='rid_item' data-rid='<?=htmlspecialcharsbx($_GET["RID"]);?>'></div>").appendTo($('body'));});</script><?}?>
+<?
+if( $templateData["OFFERS_INFO"]["CURRENT_OFFER"] && $arTheme['CHANGE_TITLE_ITEM']['VALUE'] === "Y" ){
+	global $currentOfferTitle;
+	$currentOfferTitle["CURRENT_OFFER_TITLE"] = $templateData["OFFERS_INFO"]["CURRENT_OFFER_TITLE"];
+	$currentOfferTitle["CURRENT_OFFER_WINDOW_TITLE"] = $templateData["OFFERS_INFO"]["CURRENT_OFFER_WINDOW_TITLE"];
+}
+?>
